@@ -1,0 +1,9 @@
+{
+  "name": "2017-05-25",
+  "version": "1.0.0",
+  "main": "bot.js",
+  "license": "MIT",
+  "dependencies": {
+    "telebot": "^1.2.0"
+  }
+}
