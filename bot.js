@@ -10,15 +10,36 @@ const bot = new TeleBot({
     }
 });
 
+const MAX_WORDS = 5;
+
+function getWords(text) {
+    const arr = [];
+    let i = 0;
+    let j = 0;
+    while (i < text.length && arr.length < MAX_WORDS) {
+        while (i < text.length && text[i] !== ' ') {
+            i += 1;
+        }
+        arr.push(text.slice(j, i));
+        while (i < text.length && text[i] === ' ') {
+            i += 1;
+        }
+        j = i;
+    }
+
+    if (i < text.length) {
+        arr.push(text.slice(i));
+    }
+
+    return arr;
+}
+
 bot.on(/^\/say(@xxlv_bot)? ([\s\S]+)$/m, (msg, props) => {
     const text = (props.match[2] || '')
         .replace(/\s+/g, ' ')
         .replace(/(^\s+)|(\s+$)/g, '');
-    let arr = text.split(' ');
 
-    if (arr.length > 5) {
-        arr = arr.slice(0, 5).concat([arr.slice(5).join(' ')]);
-    }
+    const arr = getWords(text);
 
     arr.reduce((def, str) => {
         return def.then(() => {
