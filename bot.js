@@ -11,7 +11,7 @@ const bot = new TeleBot({
 });
 
 bot.on(/^\/say(@xxlv_bot)? (.+)$/, (msg, props) => {
-    const text = props.match[2];
+    const text = (props.match[2] || '').replace(/\s+/g, ' ');
     let arr = text.split(' ');
 
     if (arr.length > 5) {
