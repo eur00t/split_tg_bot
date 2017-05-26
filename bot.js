@@ -10,7 +10,7 @@ const bot = new TeleBot({
     }
 });
 
-bot.on(/^\/say(@xxlv_bot)? (.+)$/m, (msg, props) => {
+bot.on(/^\/say(@xxlv_bot)? ([\s\S]+)$/m, (msg, props) => {
     const text = (props.match[2] || '').replace(/\s+/g, ' ');
     let arr = text.split(' ');
 
