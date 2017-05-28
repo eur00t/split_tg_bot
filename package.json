@@ -4,6 +4,9 @@
   "main": "bot.js",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.17.2",
+    "btoa": "^1.1.2",
+    "express": "^4.15.3",
     "telebot": "^1.2.0"
   }
 }
