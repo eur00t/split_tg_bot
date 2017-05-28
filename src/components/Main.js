@@ -1,3 +1,4 @@
+import '../scss/main.scss';
 import {
     requestHighScores,
     startGame,
@@ -26,6 +27,7 @@ export default class extends React.PureComponent {
         this.finishGame = this.finishGame.bind(this);
         this.answerCorrect = this.answerCorrect.bind(this);
         this.answerWrong = this.answerWrong.bind(this);
+        this.shareScore = this.shareScore.bind(this);
     }
 
     componentDidMount() {
@@ -48,19 +50,37 @@ export default class extends React.PureComponent {
         this.props.dispatch(gameWrongAnswer());
     }
 
-    getStartButton() {
+    shareScore() {
+        TelegramGameProxy.shareScore();
+    }
+
+    getStartButton(text) {
         return (
-            <div className="button" key="startButton" onClick={this.startGame}>
-                Start
+            <div
+                className="button block"
+                key="startButton"
+                onClick={this.startGame}
+            >
+                {text}
             </div>
         );
     }
 
     getCurrentScore() {
+        let shareButton;
+        if (this.props.game.canShare) {
+            shareButton = (
+                <div className="button" onClick={this.shareScore}>
+                    Share
+                </div>
+            );
+        }
+
         return (
             <div key="currentScore" className="current-score">
                 <h1>
                     Your score: {this.props.game.score}
+                    {shareButton}
                 </h1>
             </div>
         );
@@ -72,7 +92,7 @@ export default class extends React.PureComponent {
                 return wrapPage(
                     'highScores',
                     <HighScores key="highScores" {...this.props.highScores} />,
-                    this.getStartButton()
+                    this.getStartButton('Start')
                 );
             case 'game':
                 return wrapPage(
@@ -90,7 +110,7 @@ export default class extends React.PureComponent {
                     'gameResult',
                     this.getCurrentScore(),
                     <HighScores key="highScores" {...this.props.highScores} />,
-                    this.getStartButton()
+                    this.getStartButton('Try again')
                 );
             default:
                 return null;

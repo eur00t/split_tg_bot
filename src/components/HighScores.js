@@ -1,15 +1,16 @@
+import '../scss/highScores.scss';
 import React from 'react';
 
 export default ({ data, loading }) => {
     let table;
-    if (!loading) {
+    if (true) {
         table = (
             <table>
                 <thead>
                     <tr>
-                        <th />
-                        <th>Name</th>
-                        <th>Score</th>
+                        <th className="col-position" />
+                        <th className="col-name">Name</th>
+                        <th className="col-score">Score</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -21,13 +22,13 @@ export default ({ data, loading }) => {
                         }) => {
                             return (
                                 <tr key={id}>
-                                    <td>
-                                        {position}
+                                    <td className="col-position">
+                                        {position + '.'}
                                     </td>
-                                    <td>
+                                    <td className="col-name">
                                         {first_name + ' ' + last_name}
                                     </td>
-                                    <td>
+                                    <td className="col-score">
                                         {score}
                                     </td>
                                 </tr>
@@ -40,7 +41,7 @@ export default ({ data, loading }) => {
     }
 
     let loading_;
-    if (loading) {
+    if (false) {
         loading_ = (
             <div>
                 loading...

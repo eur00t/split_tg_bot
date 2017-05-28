@@ -1,4 +1,5 @@
 import 'babel-polyfill';
+import 'normalize.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -11,6 +12,8 @@ import gameReducer from './reducers/game';
 import uiReducer from './reducers/ui';
 
 import Main from './components/Main';
+
+import './scss/main.scss';
 
 const reducer = combineReducers({
     highScores: highScoresReducer,

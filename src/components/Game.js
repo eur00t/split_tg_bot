@@ -1,9 +1,13 @@
+import '../scss/puzzle.scss';
+import '../scss/game.scss';
 import React from 'react';
 
-const Countdown = ({ value }) => {
+import { MAX_COUNTDOWN } from '../config';
+
+const Countdown = ({ value, max }) => {
     return (
         <div className="countdown">
-            {value}
+            <div className="cell" style={{ width: value / max * 100 + '%' }} />
         </div>
     );
 };
@@ -11,20 +15,55 @@ const Countdown = ({ value }) => {
 const Answer = ({ onWrong, onCorrect }) => {
     return (
         <div className="answer">
-            <div className="button" onClick={onCorrect}>
+            <div className="button correct" onClick={onCorrect}>
                 Correct
             </div>
-            <div className="button" onClick={onWrong}>
+            <div className="button wrong" onClick={onWrong}>
                 Wrong
             </div>
         </div>
     );
 };
 
-const Puzzle = ({ isCorrect, data }) => {
+const Matrix = ({ m, size }) => {
+    return (
+        <div className="matrix">
+            {m.map((row, i) => {
+                const content = row.map((isFilled, j) => {
+                    return (
+                        <div
+                            key={j}
+                            className={'cell' + (isFilled ? ' filled' : '')}
+                        />
+                    );
+                });
+
+                return (
+                    <div key={i} className="row">
+                        {content}
+                    </div>
+                );
+            })}
+        </div>
+    );
+};
+
+const Puzzle = ({ isCorrect, data: { size, m1, m2, res } }) => {
     return (
         <div className="puzzle">
-            {isCorrect ? '+' : '-'}
+            <div className="content">
+                <div className="left">
+                    <Matrix m={m1} size={size} />
+                </div>
+                ∪
+                <div className="right">
+                    <Matrix m={m2} size={size} />
+                </div>
+                =
+                <div className="result">
+                    <Matrix m={res} size={size} />
+                </div>
+            </div>
         </div>
     );
 };
@@ -33,7 +72,7 @@ const Score = ({ value }) => {
     return (
         <div className="current-score">
             <h1>
-                Your score: {value}
+                Score: {value}
             </h1>
         </div>
     );
@@ -98,7 +137,7 @@ export default class extends React.PureComponent {
                 <Score value={this.props.score} />
                 {this.getPuzzle(this.props.puzzle)}
                 {this.getAnswer(this.props.puzzle)}
-                <Countdown value={countdown} />
+                <Countdown value={countdown} max={MAX_COUNTDOWN} />
             </div>
         );
     }

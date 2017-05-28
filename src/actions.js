@@ -7,7 +7,8 @@ import {
     FINISH_GAME,
     GAME_TICK,
     GAME_CORRECT_ANSWER,
-    GAME_WRONG_ANSWER
+    GAME_WRONG_ANSWER,
+    GAME_CAN_SHARE
 } from './actionTypes';
 
 import { apiRequest } from './tools';
@@ -69,11 +70,19 @@ export function startGame() {
 
 export function finishGame(id, score, userData) {
     return dispatch => {
-        apiRequest('setScore', { ...userData, score }).then(({ status }) => {
-            if (status === 200) {
-                dispatch(requestHighScores(userData));
+        apiRequest('setScore', { ...userData, score }).then(
+            ({ status }) => {
+                if (status === 200) {
+                    dispatch(gameCanShare(true));
+                    dispatch(requestHighScores(userData));
+                } else {
+                    dispatch(gameCanShare(false));
+                }
+            },
+            () => {
+                dispatch(gameCanShare(false));
             }
-        });
+        );
 
         clearInterval(id);
         dispatch({ type: FINISH_GAME });
@@ -96,5 +105,12 @@ export function gameCorrectAnswer() {
 export function gameWrongAnswer() {
     return {
         type: GAME_WRONG_ANSWER
+    };
+}
+
+export function gameCanShare(flag) {
+    return {
+        type: GAME_CAN_SHARE,
+        flag
     };
 }

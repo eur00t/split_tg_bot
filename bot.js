@@ -36,7 +36,8 @@ function initExpressApp() {
     app.post('/setScore', (req, res) => {
         decorateBotResult(
             bot.setGameScore(req.body.from.id, req.body.score, {
-                inlineMessageId: req.body.inline_message_id
+                inlineMessageId: req.body.inline_message_id,
+                force: false
             }),
             res
         );

@@ -1,0 +1,31 @@
+.puzzle {
+    font-size: 24px;
+
+    > .content {
+        > * {
+            display: inline-block;
+            margin: 0 7px;
+            vertical-align: middle;
+        }
+    }
+
+    .matrix {
+        > .row {
+            overflow: auto;
+            > .cell {
+                float:left;
+
+                width: 20px;
+                height: 20px;
+
+                border: 1px solid white;
+
+                background: #c7c7c7;
+
+                &.filled {
+                    background: black;
+                }
+            }
+        }
+    }
+}

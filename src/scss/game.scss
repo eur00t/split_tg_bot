@@ -1,0 +1,50 @@
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.8
+    }
+}
+
+.game {
+    text-align: center;
+
+    > .answer {
+        text-align: center;
+
+        margin: 0 0 20px 0;
+
+        > .button.wrong {
+            background: #de6161;
+        }
+
+        > .button {
+            margin: 0 10px;
+        }
+    }
+
+    > .puzzle {
+        margin: 0 0 20px 0;
+
+        display: inline-block;
+    }
+
+    > .countdown {
+        font-size: 0;
+
+        height: 20px;
+
+        background: #eee;
+        overflow: auto;
+
+        > .cell {
+            height: 100%;
+            float: left;
+
+            background: #555;
+
+            animation: blink 1000ms linear 0s infinite alternate;
+        }
+    }
+}

@@ -3,7 +3,8 @@ import {
     FINISH_GAME,
     GAME_TICK,
     GAME_CORRECT_ANSWER,
-    GAME_WRONG_ANSWER
+    GAME_WRONG_ANSWER,
+    GAME_CAN_SHARE
 } from '../actionTypes';
 import { MAX_COUNTDOWN } from '../config';
 
@@ -15,7 +16,8 @@ const INITIAL_GAME_STATE = {
     countdown: 0,
     score: 0,
     puzzle: null,
-    id: null
+    id: null,
+    canShare: false
 };
 
 export default (state = INITIAL_GAME_STATE, action) => {
@@ -29,7 +31,8 @@ export default (state = INITIAL_GAME_STATE, action) => {
                 countdown: MAX_COUNTDOWN,
                 score: 0,
                 puzzle: getPuzzle(),
-                id: action.id
+                id: action.id,
+                canShare: false
             };
 
         case GAME_TICK:
@@ -74,6 +77,12 @@ export default (state = INITIAL_GAME_STATE, action) => {
             return {
                 ...state,
                 active: false
+            };
+
+        case GAME_CAN_SHARE:
+            return {
+                ...state,
+                canShare: action.flag
             };
 
         default:

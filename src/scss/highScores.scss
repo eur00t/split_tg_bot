@@ -1,0 +1,39 @@
+.high-scores {
+    margin: 0 0 20px 0;
+
+    table {
+        .col-position {
+            width: 30px;
+
+            text-align: right;
+            padding-right: 6px;
+        }
+
+        .col-name {
+            width: 182px;
+            text-align: left;
+        }
+
+        .col-score {
+            width: 75px;
+
+            text-align: center;
+        }
+
+        td {
+            padding: 4px 0 4px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            padding: 0 0 4px 0;
+            border-bottom: 2px solid #eee;
+        }
+
+        tr:last-child {
+            > td {
+                border-bottom: 0;
+            }
+        }
+    }
+}

@@ -9,3 +9,4 @@ export const FINISH_GAME = 'FINISH_GAME';
 export const GAME_TICK = 'GAME_TICK';
 export const GAME_CORRECT_ANSWER = 'GAME_CORRECT_ANSWER';
 export const GAME_WRONG_ANSWER = 'GAME_WRONG_ANSWER';
+export const GAME_CAN_SHARE = 'GAME_CAN_SHARE';

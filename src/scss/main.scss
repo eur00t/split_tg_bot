@@ -1,0 +1,44 @@
+.main {
+    text-align: center;
+
+    font-family: sans-serif;
+
+    h1 {
+        font-size: 24px;
+    }
+
+    > div {
+        display: inline-block;
+        text-align: initial;
+    }
+
+    .button {
+        display: inline-block;
+
+        border-radius: 2px;
+        background: #6ab36a;
+
+        color: white;
+
+        padding: 20px 20px;
+
+        text-align: center;
+
+        cursor: pointer;
+
+        &.block {
+            display: block;
+        }
+    }
+
+    .current-score {
+        .button {
+            padding: 10px 15px;
+            margin: 0 0 0 10px;
+
+            background: transparent;
+            color: #6c6cfb;
+            border: 2px solid #6c6cfb
+        }
+    }
+}
