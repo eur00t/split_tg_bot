@@ -14,7 +14,7 @@ module.exports = function(env) {
     const plugins = [
         new HtmlWebpackPlugin({
             template: 'index.ejs',
-            filename: 'index.html'
+            filename: '../index.html'
         }),
         new CleanWebpackPlugin(['public'], {
             root: resolve(__dirname, '../')
@@ -42,7 +42,7 @@ module.exports = function(env) {
         entry: ['./game.js'],
         output: {
             filename,
-            path: resolve(__dirname, '../public')
+            path: resolve(__dirname, '../public/dist')
         },
         devtool,
         module: {
