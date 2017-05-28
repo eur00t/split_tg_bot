@@ -57,7 +57,7 @@ export default (state = INITIAL_GAME_STATE, action) => {
                 ...state,
                 score: state.score + 1,
                 puzzle: getPuzzle(),
-                countdown: Math.min(state.countdown + 2, MAX_COUNTDOWN)
+                countdown: Math.min(state.countdown + 3, MAX_COUNTDOWN)
             };
 
         case GAME_WRONG_ANSWER:
