@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = function(env) {
     const filename = env.production ? '[hash].bundle.js' : 'bundle.js';
@@ -35,6 +36,10 @@ module.exports = function(env) {
                     NODE_ENV: JSON.stringify('production')
                 }
             })
+        );
+
+        plugins.push(
+            new OptimizeCssAssetsPlugin()
         );
     }
 
