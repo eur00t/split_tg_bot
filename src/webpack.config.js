@@ -15,7 +15,12 @@ module.exports = function(env) {
     const plugins = [
         new HtmlWebpackPlugin({
             template: 'index.ejs',
-            filename: '../index.html'
+            filename: '../index.html',
+            minify: env.production
+                ? {
+                      collapseWhitespace: true
+                  }
+                : false
         }),
         new CleanWebpackPlugin(['public'], {
             root: resolve(__dirname, '../')
@@ -38,9 +43,7 @@ module.exports = function(env) {
             })
         );
 
-        plugins.push(
-            new OptimizeCssAssetsPlugin()
-        );
+        plugins.push(new OptimizeCssAssetsPlugin());
     }
 
     const conf = {
