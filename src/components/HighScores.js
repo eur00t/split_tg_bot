@@ -1,6 +1,24 @@
 import '../scss/highScores.scss';
 import React from 'react';
 
+function getName(first_name, last_name) {
+    const arr = [];
+
+    if (first_name != null) {
+        arr.push(first_name);
+    }
+
+    if (last_name != null) {
+        arr.push(last_name);
+    }
+
+    if (arr.length === 0) {
+        arr.push('Anonymous');
+    }
+
+    return arr.join(' ');
+}
+
 export default ({ data, loading }) => {
     let table;
     if (true) {
@@ -26,7 +44,7 @@ export default ({ data, loading }) => {
                                         {position + '.'}
                                     </td>
                                     <td className="col-name">
-                                        {first_name + ' ' + last_name}
+                                        {getName(first_name, last_name)}
                                     </td>
                                     <td className="col-score">
                                         {score}
