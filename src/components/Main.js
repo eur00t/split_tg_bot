@@ -9,7 +9,7 @@ import {
 import React from 'react';
 
 import HighScores from './HighScores';
-import Game from './Game';
+import Game, { Puzzle } from './Game';
 
 function wrapPage(key, ...elements) {
     return (
@@ -17,6 +17,53 @@ function wrapPage(key, ...elements) {
             {elements}
         </div>
     );
+}
+
+class WrongAnswers extends React.PureComponent {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            expanded: false
+        };
+
+        this.expand = this.expand.bind(this);
+    }
+
+    expand() {
+        this.setState(() => ({ expanded: true }));
+    }
+
+    render() {
+        const { puzzles } = this.props;
+        const { expanded } = this.state;
+
+        let content;
+        if (expanded) {
+            content = (
+                <div className="puzzles">
+                    {puzzles.map((puzzle, i) => {
+                        return (
+                            <Puzzle
+                                key={i}
+                                {...puzzle}
+                                showDisruptions={true}
+                            />
+                        );
+                    })}
+                </div>
+            );
+        }
+
+        return (
+            <div className="wrong-answers">
+                <span onClick={this.expand} className="wrong-answers-btn">
+                    Show wrong answers
+                </span>
+                {content}
+            </div>
+        );
+    }
 }
 
 export default class extends React.PureComponent {
@@ -110,7 +157,11 @@ export default class extends React.PureComponent {
                     'gameResult',
                     this.getCurrentScore(),
                     <HighScores key="highScores" {...this.props.highScores} />,
-                    this.getStartButton('Try again')
+                    this.getStartButton('Try again'),
+                    <WrongAnswers
+                        key="wrongAnswers"
+                        puzzles={this.props.game.wrongAnswers}
+                    />
                 );
             default:
                 return null;

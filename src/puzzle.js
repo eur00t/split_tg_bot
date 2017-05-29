@@ -39,14 +39,18 @@ function disruptSingle(m, size) {
     const j = randomInt(0, size - 1);
 
     m[i][j] = !m[i][j];
+
+    return [i, j];
 }
 
 function disrupt(m, num, size) {
+    const disruptions = {};
     for (let i = 0; i < num; i += 1) {
-        disruptSingle(m, size);
+        const [i_, j] = disruptSingle(m, size);
+        disruptions[`${i_}-${j}`] = true;
     }
 
-    return m;
+    return { res: m, disruptions };
 }
 
 function generatePuzzle(isCorrect) {
@@ -59,9 +63,10 @@ function generatePuzzle(isCorrect) {
     const m1 = makeMatrix(size);
     const m2 = makeMatrix(size);
     let res = operation(m1, m2, size);
+    let disruptions = [];
 
     if (!isCorrect) {
-        res = disrupt(res, disruptPower, size);
+        ({ res, disruptions } = disrupt(res, disruptPower, size));
     }
 
     return {
@@ -69,7 +74,8 @@ function generatePuzzle(isCorrect) {
         m1,
         m2,
         res,
-        type
+        type,
+        disruptions
     };
 }
 

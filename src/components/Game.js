@@ -25,7 +25,7 @@ const Answer = ({ onWrong, onCorrect }) => {
     );
 };
 
-const Matrix = ({ m, size }) => {
+const Matrix = ({ m, size, disruptions = {} }) => {
     return (
         <div className="matrix">
             {m.map((row, i) => {
@@ -33,7 +33,13 @@ const Matrix = ({ m, size }) => {
                     return (
                         <div
                             key={j}
-                            className={'cell' + (isFilled ? ' filled' : '')}
+                            className={
+                                'cell' +
+                                    (isFilled ? ' filled' : '') +
+                                    (disruptions[`${i}-${j}`] === true
+                                        ? ' wrong'
+                                        : '')
+                            }
                         />
                     );
                 });
@@ -54,9 +60,15 @@ const TYPE_SYMBOLS = {
     difference: '∖'
 };
 
-const Puzzle = ({ isCorrect, data: { size, m1, m2, res, type } }) => {
+export const Puzzle = ({
+    isCorrect,
+    showDisruptions,
+    data: { size, m1, m2, res, type, disruptions }
+}) => {
     return (
-        <div className="puzzle">
+        <div
+            className={'puzzle' + (showDisruptions ? ' show-disruptions' : '')}
+        >
             <div className="content">
                 <div className="left">
                     <Matrix m={m1} size={size} />
@@ -67,7 +79,7 @@ const Puzzle = ({ isCorrect, data: { size, m1, m2, res, type } }) => {
                 </div>
                 =
                 <div className="result">
-                    <Matrix m={res} size={size} />
+                    <Matrix m={res} size={size} disruptions={disruptions} />
                 </div>
             </div>
         </div>

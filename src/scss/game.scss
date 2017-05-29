@@ -28,6 +28,10 @@
         margin: 0 0 20px 0;
 
         display: inline-block;
+
+        > .content {
+            line-height: 84px;
+        }
     }
 
     > .countdown {

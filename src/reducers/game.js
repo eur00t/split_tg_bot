@@ -17,7 +17,8 @@ const INITIAL_GAME_STATE = {
     score: 0,
     puzzle: null,
     id: null,
-    canShare: false
+    canShare: false,
+    wrongAnswers: []
 };
 
 export default (state = INITIAL_GAME_STATE, action) => {
@@ -32,7 +33,8 @@ export default (state = INITIAL_GAME_STATE, action) => {
                 score: 0,
                 puzzle: getPuzzle(),
                 id: action.id,
-                canShare: false
+                canShare: false,
+                wrongAnswers: []
             };
 
         case GAME_TICK:
@@ -69,6 +71,7 @@ export default (state = INITIAL_GAME_STATE, action) => {
 
             return {
                 ...state,
+                wrongAnswers: [...state.wrongAnswers, state.puzzle],
                 puzzle: countdown === 0 ? null : getPuzzle(),
                 countdown
             };

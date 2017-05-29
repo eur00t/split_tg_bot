@@ -28,4 +28,18 @@
             }
         }
     }
+
+    &.show-disruptions {
+        .matrix {
+            > .row {
+                > .cell.wrong {
+                    background: #efc7c7;
+
+                    &.filled {
+                        background: #e05050;
+                    }
+                }
+            }
+        }
+    }
 }
