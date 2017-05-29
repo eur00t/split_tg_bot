@@ -48,14 +48,20 @@ const Matrix = ({ m, size }) => {
     );
 };
 
-const Puzzle = ({ isCorrect, data: { size, m1, m2, res } }) => {
+const TYPE_SYMBOLS = {
+    union: '∪',
+    intersection: '∩',
+    difference: '∖'
+};
+
+const Puzzle = ({ isCorrect, data: { size, m1, m2, res, type } }) => {
     return (
         <div className="puzzle">
             <div className="content">
                 <div className="left">
                     <Matrix m={m1} size={size} />
                 </div>
-                ∪
+                {TYPE_SYMBOLS[type]}
                 <div className="right">
                     <Matrix m={m2} size={size} />
                 </div>

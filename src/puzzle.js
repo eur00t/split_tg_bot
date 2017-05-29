@@ -1,4 +1,4 @@
-import { randomBool, randomInt } from './tools';
+import { randomBool, randomInt, randomList } from './tools';
 import { PUZZLE_SIZE, PUZZLE_DISRUPT_POWER } from './config';
 
 function construct(size, getVal) {
@@ -20,37 +20,56 @@ function makeMatrix(size) {
     return construct(size, () => randomBool());
 }
 
-function sum(m1, m2, size) {
-    return construct(size, (i, j) => m1[i][j] || m2[i][j]);
-}
+const ops = {
+    union: function(m1, m2, size) {
+        return construct(size, (i, j) => m1[i][j] || m2[i][j]);
+    },
 
-function disruptSingle(m) {
-    const i = randomInt(0, PUZZLE_SIZE - 1);
-    const j = randomInt(0, PUZZLE_SIZE - 1);
+    intersection: function(m1, m2, size) {
+        return construct(size, (i, j) => m1[i][j] && m2[i][j]);
+    },
+
+    difference: function(m1, m2, size) {
+        return construct(size, (i, j) => m1[i][j] && !m2[i][j]);
+    }
+};
+
+function disruptSingle(m, size) {
+    const i = randomInt(0, size - 1);
+    const j = randomInt(0, size - 1);
 
     m[i][j] = !m[i][j];
 }
 
-function disrupt(m, num) {
+function disrupt(m, num, size) {
     for (let i = 0; i < num; i += 1) {
-        disruptSingle(m);
+        disruptSingle(m, size);
     }
 
     return m;
 }
 
 function generatePuzzle(isCorrect) {
-    const m1 = makeMatrix(PUZZLE_SIZE);
-    const m2 = makeMatrix(PUZZLE_SIZE);
-    let res = sum(m1, m2, PUZZLE_SIZE);
+    const type = randomList(['union', 'intersection', 'difference']);
+    const { min, max } = PUZZLE_SIZE[type];
+    const size = randomInt(min, max);
+    const disruptPower = PUZZLE_DISRUPT_POWER[size];
+    const operation = ops[type];
+
+    const m1 = makeMatrix(size);
+    const m2 = makeMatrix(size);
+    let res = operation(m1, m2, size);
 
     if (!isCorrect) {
-        res = disrupt(res, PUZZLE_DISRUPT_POWER)
+        res = disrupt(res, disruptPower, size);
     }
 
     return {
-        size: PUZZLE_SIZE,
-        m1, m2, res
+        size,
+        m1,
+        m2,
+        res,
+        type
     };
 }
 

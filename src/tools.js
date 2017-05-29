@@ -21,3 +21,7 @@ export function randomBool() {
         return false;
     }
 }
+
+export function randomList(list) {
+    return list[randomInt(0, list.length - 1)];
+}
