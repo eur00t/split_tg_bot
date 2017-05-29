@@ -34,9 +34,13 @@ const ops = {
     }
 };
 
-function disruptSingle(m, size) {
-    const i = randomInt(0, size - 1);
-    const j = randomInt(0, size - 1);
+function disruptSingle(disruptions, m, size) {
+    let i, j;
+
+    do {
+        i = randomInt(0, size - 1);
+        j = randomInt(0, size - 1);
+    } while (disruptions[`${i}-${j}`]);
 
     m[i][j] = !m[i][j];
 
@@ -46,7 +50,7 @@ function disruptSingle(m, size) {
 function disrupt(m, num, size) {
     const disruptions = {};
     for (let i = 0; i < num; i += 1) {
-        const [i_, j] = disruptSingle(m, size);
+        const [i_, j] = disruptSingle(disruptions, m, size);
         disruptions[`${i_}-${j}`] = true;
     }
 
