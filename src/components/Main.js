@@ -55,11 +55,18 @@ class WrongAnswers extends React.PureComponent {
             );
         }
 
-        return (
-            <div className="wrong-answers">
+        let btn;
+        if (!expanded) {
+            btn = (
                 <span onClick={this.expand} className="wrong-answers-btn">
                     Show wrong answers
                 </span>
+            );
+        }
+
+        return (
+            <div className="wrong-answers">
+                {btn}
                 {content}
             </div>
         );
