@@ -56,7 +56,11 @@
             display: inline-block;
         }
 
-        > .puzzles {
+        .answerCategory {
+            margin: 20px 0 10px 0;
+        }
+
+        .puzzles {
             text-align: center;
 
             > .puzzle {

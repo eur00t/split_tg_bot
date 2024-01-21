@@ -12,11 +12,7 @@ import HighScores from './HighScores';
 import Game, { Puzzle } from './Game';
 
 function wrapPage(key, ...elements) {
-    return (
-        <div key={key}>
-            {elements}
-        </div>
-    );
+    return <div key={key}>{elements}</div>;
 }
 
 class WrongAnswers extends React.PureComponent {
@@ -38,19 +34,49 @@ class WrongAnswers extends React.PureComponent {
         const { puzzles } = this.props;
         const { expanded } = this.state;
 
+        const correctPuzzles = puzzles.filter(({ isCorrect }) => isCorrect);
+        const wrongPuzzles = puzzles.filter(({ isCorrect }) => !isCorrect);
+
         let content;
         if (expanded) {
             content = (
-                <div className="puzzles">
-                    {puzzles.map((puzzle, i) => {
-                        return (
-                            <Puzzle
-                                key={i}
-                                {...puzzle}
-                                showDisruptions={true}
-                            />
-                        );
-                    })}
+                <div>
+                    {correctPuzzles.length > 0 ? (
+                        <div>
+                            <div className="answerCategory">
+                                these equations were correct
+                            </div>
+                            <div className="puzzles">
+                                {correctPuzzles.map((puzzle, i) => {
+                                    return (
+                                        <Puzzle
+                                            key={i}
+                                            {...puzzle}
+                                            showDisruptions={true}
+                                        />
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    ) : null}
+                    {wrongPuzzles.length > 0 ? (
+                        <div>
+                            <div className="answerCategory">
+                                these equations were wrong
+                            </div>
+                            <div className="puzzles">
+                                {wrongPuzzles.map((puzzle, i) => {
+                                    return (
+                                        <Puzzle
+                                            key={i}
+                                            {...puzzle}
+                                            showDisruptions={true}
+                                        />
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    ) : null}
                 </div>
             );
         }
@@ -177,9 +203,7 @@ export default class extends React.PureComponent {
 
     render() {
         return (
-            <div className="main">
-                {this.getContent(this.props.ui.section)}
-            </div>
+            <div className="main">{this.getContent(this.props.ui.section)}</div>
         );
     }
 }
