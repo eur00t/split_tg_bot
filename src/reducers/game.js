@@ -11,7 +11,10 @@ import { MAX_COUNTDOWN } from '../config';
 import getPuzzle from '../puzzle';
 
 const INITIAL_GAME_STATE = {
-    userData: JSON.parse(atob(TelegramGameProxy.initParams.data)),
+    userData:
+        TelegramGameProxy.initParams.data !== undefined
+            ? JSON.parse(atob(TelegramGameProxy.initParams.data))
+            : {},
     active: false,
     countdown: 0,
     score: 0,
